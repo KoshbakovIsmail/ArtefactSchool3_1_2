@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school32.model.Faculty;
 import ru.hogwarts.school32.service.FacultyService;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/faculty")
@@ -20,7 +20,7 @@ public class FacultyController {
 
     @GetMapping
     @Operation(summary = "Получение всех значение")
-    public Map<Long, Faculty> getAll() {
+    public List<Faculty> getAll() {
         return facultyService.getAll();
     }
 
@@ -32,7 +32,7 @@ public class FacultyController {
 
     @GetMapping("/color/{color}")
     @Operation(summary = "Фильтрация по цвету факультета")
-    public Map<Long, Faculty> filterFacultyByColor(@PathVariable String color) {
+    public List<Faculty> filterFacultyByColor(@PathVariable String color) {
         return facultyService.filterFacultyByColor(color);
     }
 

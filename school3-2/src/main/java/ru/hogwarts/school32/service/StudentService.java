@@ -2,7 +2,7 @@ package ru.hogwarts.school32.service;
 
 import ru.hogwarts.school32.model.Student;
 
-import java.util.Map;
+import java.util.List;
 
 public interface StudentService {
     Student createStudent(Student student);
@@ -13,8 +13,8 @@ public interface StudentService {
 
     Student getStudentById(Long id);
 
-    Map<Long, Student> getAll();
+    List<Student> getAll();
 
-    Map<Long, Student> filterStudentByAge(Integer age);
+    List<Student> filterStudentByAge(Integer age);
 
 }

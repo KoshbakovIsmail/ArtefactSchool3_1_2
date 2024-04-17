@@ -1,8 +1,8 @@
 package ru.hogwarts.school32.service;
 
 import ru.hogwarts.school32.model.Faculty;
-import java.util.Map;
 
+import java.util.List;
 public interface FacultyService {
     Faculty createFaculty(Faculty faculty);
 
@@ -12,8 +12,8 @@ public interface FacultyService {
 
     Faculty getFacultyById(Long id);
 
-    Map<Long, Faculty> getAll();
+    List<Faculty> getAll();
 
-    Map<Long, Faculty> filterFacultyByColor(String color);
+    List<Faculty> filterFacultyByColor(String color);
 
 }

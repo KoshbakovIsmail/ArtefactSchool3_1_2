@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.service.StudentService;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -21,7 +21,7 @@ public class StudentController {
 
     @GetMapping
     @Operation(summary = "Получение всех значение")
-    public Map<Long, Student> getAll() {
+    public List<Student> getAll() {
         return studentService.getAll();
     }
 
@@ -33,7 +33,7 @@ public class StudentController {
 
     @GetMapping("/age/{age}")
     @Operation(summary = "Фильтрация струдентов по возрасту")
-    public Map<Long, Student> filterStudentAge(@PathVariable Integer age) {
+    public List<Student> filterStudentAge(@PathVariable Integer age) {
         return studentService.filterStudentByAge(age);
     }
 

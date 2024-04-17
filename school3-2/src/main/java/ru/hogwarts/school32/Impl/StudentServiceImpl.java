@@ -4,71 +4,58 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school32.exception.StudentNotFoundException;
 import ru.hogwarts.school32.exception.StudentllegalArgumentException;
 import ru.hogwarts.school32.model.Student;
+import ru.hogwarts.school32.repositorys.RepositoryStudent;
 import ru.hogwarts.school32.service.StudentService;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+    private final RepositoryStudent repositoryStudent;
 
-    private Map<Long, Student> studentMap = new HashMap<>();
-    private Long idCount = 1L;
+    public StudentServiceImpl(RepositoryStudent repositoryStudent) {
+        this.repositoryStudent = repositoryStudent;
+    }
 
     @Override
     public Student createStudent(Student student) {
-        Long id = idCount++;
-        student.setId(id);
-        studentMap.put(id, student);
-        return student;
+        return repositoryStudent.save(student);
     }
 
     @Override
     public Student updateStudent(Long id, Student student) {
-        if (studentMap.containsKey(id)) {
+        if (student == null) {
+            throw new StudentllegalArgumentException();
+        }
+        if (repositoryStudent.existsById(id)) {
             student.setId(id);
-            studentMap.put(id, student);
-            return student;
+            return repositoryStudent.save(student);
         }
         throw new StudentNotFoundException();
     }
 
     @Override
     public Student deleteStudent(Long id) {
-        if (studentMap.containsKey(id)) {
-            Student deleteStudent = studentMap.get(id);
-            studentMap.remove(id);
-            return deleteStudent;
+        if (repositoryStudent.existsById(id)) {
+            Student deleteFacult = repositoryStudent.findById(id).orElse(null);
+            repositoryStudent.deleteById(id);
+            return deleteFacult;
         }
         throw new StudentNotFoundException();
     }
 
     @Override
     public Student getStudentById(Long id) {
-        if (studentMap.containsKey(id)) {
-            Student result = studentMap.get(id);
-            return result;
-        }
-        throw new StudentNotFoundException();
+        return repositoryStudent.findById(id).orElseThrow(StudentNotFoundException::new);
     }
 
     @Override
-    public Map<Long, Student> getAll() {
-        return studentMap;
+    public List<Student> getAll() {
+        return repositoryStudent.findAll();
     }
 
     @Override
-    public Map<Long, Student> filterStudentByAge(Integer age) {
-        Map<Long, Student> filterStudent = new HashMap<>();
-        for (Map.Entry<Long, Student> entry : studentMap.entrySet()) {
-            Student student = entry.getValue();
-            if (student.getAge() == age) {
-                filterStudent.put(entry.getKey(), student);
-            }
-        }
-        if (filterStudent.isEmpty()) {
-            throw new StudentllegalArgumentException();
-        }
-        return filterStudent;
+    public List<Student> filterStudentByAge(Integer age) {
+        return repositoryStudent.findByAge(age);
     }
 }
