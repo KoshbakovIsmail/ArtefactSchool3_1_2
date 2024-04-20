@@ -3,6 +3,7 @@ package ru.hogwarts.school32.Impl;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school32.exception.StudentNotFoundException;
 import ru.hogwarts.school32.exception.StudentllegalArgumentException;
+import ru.hogwarts.school32.model.Faculty;
 import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.repositorys.RepositoryStudent;
 import ru.hogwarts.school32.service.StudentService;
@@ -58,4 +59,16 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> filterStudentByAge(Integer age) {
         return repositoryStudent.findByAge(age);
     }
+
+    @Override
+    public List<Student> findByAgeBetweens(Integer min, Integer max) {
+        return repositoryStudent.findByAgeBetween(min, max);
+    }
+
+    @Override
+    public Faculty getFaculty(Long studentId) {
+        Student student = getStudentById(studentId);
+        return student.getFaculty();
+    }
+
 }
