@@ -3,7 +3,6 @@ package ru.hogwarts.school32.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +17,10 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     @JsonBackReference
     private Faculty faculty;
+
+    @ManyToOne
+    @JoinColumn(name = "avatar_id")
+    private Avatar avatar;
 
     public Student() {
 
