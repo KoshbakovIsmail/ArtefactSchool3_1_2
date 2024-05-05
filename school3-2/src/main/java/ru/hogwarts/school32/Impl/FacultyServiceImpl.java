@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school32.exception.FacultyIllegalArgumentException;
 import ru.hogwarts.school32.exception.FacultyNotFoundException;
 import ru.hogwarts.school32.model.Faculty;
+import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.repositorys.RepositoryFaculty;
 import ru.hogwarts.school32.service.FacultyService;
 
@@ -16,6 +17,7 @@ public class FacultyServiceImpl implements FacultyService {
     public FacultyServiceImpl(RepositoryFaculty repositoryFaculty) {
         this.repositoryFaculty = repositoryFaculty;
     }
+
     @Override
     public Faculty createFaculty(Faculty faculty) {
         return repositoryFaculty.save(faculty);
@@ -56,5 +58,15 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public List<Faculty> filterFacultyByColor(String color) {
         return repositoryFaculty.findByColor(color);
+    }
+
+    @Override
+    public List<Faculty> getByColorOrName(String color, String name) {
+        return repositoryFaculty.findByColorIgnoreCaseAndNameIgnoreCase(color, name);
+    }
+
+    @Override
+    public List<Student> getStudentsFaculty(Long facultyId) {
+        return getFacultyById(facultyId).getStudentList();
     }
 }

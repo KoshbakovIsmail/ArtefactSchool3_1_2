@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school32.model.Faculty;
+import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.service.FacultyService;
 
 import java.util.List;
@@ -34,6 +35,18 @@ public class FacultyController {
     @Operation(summary = "Фильтрация по цвету факультета")
     public List<Faculty> filterFacultyByColor(@PathVariable String color) {
         return facultyService.filterFacultyByColor(color);
+    }
+
+    @GetMapping("get-by-color-or-name")
+    @Operation(summary = "Получение факультетов по цвету или по имени")
+    public List<Faculty> getByColorOrName(@RequestParam String color, @RequestParam String name) {
+        return facultyService.getByColorOrName(color, name);
+    }
+
+    @GetMapping("student/{facultyId}")
+    @Operation(summary = "Получение студентов факультета")
+    public List<Student> getStudentsFaculty(@PathVariable Long facultyId) {
+        return facultyService.getStudentsFaculty(facultyId);
     }
 
     @PostMapping()
