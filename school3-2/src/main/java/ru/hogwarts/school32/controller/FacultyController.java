@@ -37,21 +37,21 @@ public class FacultyController {
         return facultyService.filterFacultyByColor(color);
     }
 
-    @GetMapping("get-by-color-or-name")
+    @GetMapping("/get-by-color-or-name")
     @Operation(summary = "Получение факультетов по цвету или по имени")
-    public List<Faculty> getByColorOrName(@RequestParam String color, @RequestParam String name) {
+    public List<Faculty> getFacultyByColorOrName(@RequestParam String color, @RequestParam String name) {
         return facultyService.getByColorOrName(color, name);
     }
 
     @GetMapping("student/{facultyId}")
     @Operation(summary = "Получение студентов факультета")
-    public List<Student> getStudentsFaculty(@PathVariable Long facultyId) {
+    public List<Student> getStudentsFacultyById(@PathVariable Long facultyId) {
         return facultyService.getStudentsFaculty(facultyId);
     }
 
     @PostMapping()
     @Operation(summary = "Добавить факультет")
-    public Faculty createFacult(@RequestBody Faculty faculty) {
+    public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.createFaculty(faculty);
     }
 

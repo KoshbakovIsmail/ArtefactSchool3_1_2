@@ -1,7 +1,6 @@
 package ru.hogwarts.school32.Impl;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school32.exception.FacultyIllegalArgumentException;
 import ru.hogwarts.school32.exception.FacultyNotFoundException;
 import ru.hogwarts.school32.model.Faculty;
 import ru.hogwarts.school32.model.Student;
@@ -25,29 +24,26 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty updateFaculty(Long id, Faculty faculty) {
-        if (faculty == null) {
-            throw new FacultyIllegalArgumentException();
-        }
-        if (repositoryFaculty.existsById(id)) {
-            faculty.setId(id);
-            return repositoryFaculty.save(faculty);
+        Faculty updateFaculty = repositoryFaculty.findById(id).orElse(null);
+        if (updateFaculty != null) {
+            updateFaculty.setId(id);
+            updateFaculty.setName(faculty.getName());
+            updateFaculty.setColor(faculty.getColor());
+            return repositoryFaculty.save(updateFaculty);
         }
         throw new FacultyNotFoundException();
     }
 
     @Override
     public Faculty deleteFaculty(Long id) {
-        if (repositoryFaculty.existsById(id)) {
-            Faculty deleteFacult = repositoryFaculty.findById(id).orElse(null);
-            repositoryFaculty.deleteById(id);
-            return deleteFacult;
-        }
-        throw new FacultyNotFoundException();
+        Faculty deleteFaculty = repositoryFaculty.findById(id).orElse(null);
+        repositoryFaculty.deleteById(id);
+        return deleteFaculty;
     }
 
     @Override
     public Faculty getFacultyById(Long id) {
-        return repositoryFaculty.findById(id).orElseThrow(FacultyNotFoundException::new);
+        return repositoryFaculty.findById(id).orElseThrow(()-> new FacultyNotFoundException());
     }
 
     @Override

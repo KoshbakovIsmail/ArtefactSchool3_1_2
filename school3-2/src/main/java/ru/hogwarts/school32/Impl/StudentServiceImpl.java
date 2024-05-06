@@ -2,7 +2,6 @@ package ru.hogwarts.school32.Impl;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school32.exception.StudentNotFoundException;
-import ru.hogwarts.school32.exception.StudentllegalArgumentException;
 import ru.hogwarts.school32.model.Faculty;
 import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.repositorys.RepositoryStudent;
@@ -25,29 +24,26 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student updateStudent(Long id, Student student) {
-        if (student == null) {
-            throw new StudentllegalArgumentException();
-        }
-        if (repositoryStudent.existsById(id)) {
-            student.setId(id);
-            return repositoryStudent.save(student);
+        Student updateStudent = repositoryStudent.findById(id).orElse(null);
+        if (updateStudent != null) {
+            updateStudent.setId(id);
+            updateStudent.setName(student.getName());
+            updateStudent.setAge(student.getAge());
+            return repositoryStudent.save(updateStudent);
         }
         throw new StudentNotFoundException();
     }
 
     @Override
     public Student deleteStudent(Long id) {
-        if (repositoryStudent.existsById(id)) {
-            Student deleteFacult = repositoryStudent.findById(id).orElse(null);
+        Student deleteFaculty = repositoryStudent.findById(id).orElse(null);
             repositoryStudent.deleteById(id);
-            return deleteFacult;
-        }
-        throw new StudentNotFoundException();
+            return deleteFaculty;
     }
 
     @Override
     public Student getStudentById(Long id) {
-        return repositoryStudent.findById(id).orElseThrow(StudentNotFoundException::new);
+        return repositoryStudent.findById(id).orElseThrow(() -> new StudentNotFoundException());
     }
 
     @Override

@@ -28,7 +28,7 @@ public class StudentController {
 
     @GetMapping("/faculty/{studentId}")
     @Operation(summary = "Получеть факультет студента по Id")
-    public Faculty getFacultytById(@PathVariable Long studentId) {
+    public Faculty getFacultyById(@PathVariable Long studentId) {
         return studentService.getFaculty(studentId);
     }
 
@@ -46,7 +46,7 @@ public class StudentController {
 
     @GetMapping("/age/{min}/{max}")
     @Operation(summary = "Получение струдентов в промежутке запроса")
-    public List<Student> filterStudentAge(@PathVariable Integer min, @PathVariable Integer max) {
+    public List<Student> filterStudentByMinAndMaxAge(@PathVariable Integer min, @PathVariable Integer max) {
         return studentService.findByAgeBetweens(min, max);
     }
 
