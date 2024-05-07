@@ -138,8 +138,7 @@ class StudentControllerWebMvcTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/student/" + STUDENT_ID_1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
+                .andExpect(status().isNotFound());
     }
 
 

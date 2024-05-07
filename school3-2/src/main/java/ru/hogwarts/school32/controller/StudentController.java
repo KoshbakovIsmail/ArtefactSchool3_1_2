@@ -66,5 +66,6 @@ public class StudentController {
     @Operation(summary = "Удаление студента по ID")
     public Student deleteStudent(@PathVariable Long id) {
         return studentService.deleteStudent(id);
+
     }
 }

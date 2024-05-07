@@ -21,8 +21,9 @@ public class ModelConstantsTest {
     public static final String FACULTY_COLOR_1 = "Color1";
     public static final String FACULTY_COLOR_2 = "Color2";
 
-    public static final Student STUDENT1 = new Student(STUDENT_ID_1, STUDENT_NAME_1, STUDENT_AGE_1);
-    public static final Student STUDENT2 = new Student(STUDENT_ID_2, STUDENT_NAME_2, STUDENT_AGE_2);
+    public static final Student STUDENT1 = new Student(STUDENT_ID_1,STUDENT_NAME_1, STUDENT_AGE_1);
+    public static final Student STUDENT2 = new Student(STUDENT_ID_2,STUDENT_NAME_2, STUDENT_AGE_2);
+
     public static final Faculty FACULTY1 = new Faculty(FACULTY_ID_1, FACULTY_NAME_1, FACULTY_COLOR_1);
     public static final Faculty FACULTY2 = new Faculty(FACULTY_ID_2, FACULTY_NAME_2, FACULTY_COLOR_2);
 
