@@ -1,5 +1,6 @@
 package ru.hogwarts.school32.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school32.model.Avatar;
@@ -16,4 +17,6 @@ public interface AvatarService {
     Avatar findAvatar(Long id);
 
     void deleteAvatar(Long studentId);
+
+    Page<Avatar> findAll(int page,int size);
 }
