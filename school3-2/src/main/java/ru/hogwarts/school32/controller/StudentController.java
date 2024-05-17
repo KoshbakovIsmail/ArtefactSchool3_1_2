@@ -20,6 +20,23 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping("/totalCount")
+    @Operation(summary = "Получение общего количесто студентов")
+    public int getTotalStudentCount() {
+        return studentService.getStudentCount();
+    }
+
+    @GetMapping("/averageAge")
+    @Operation(summary = "Получение среднего возраста в среди студентов")
+    public int getAverageAgeStudents() {
+        return studentService.getAverageAgeStudent();
+    }
+
+    @GetMapping("/lastFive")
+    @Operation(summary = "Получение 5 последних студентов со списка")
+    public List<Student> getLastFiveStudents() {
+        return studentService.getLastFiveStudent();
+    }
     @GetMapping
     @Operation(summary = "Получение всех значение")
     public List<Student> getAll() {

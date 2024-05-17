@@ -1,6 +1,8 @@
 package ru.hogwarts.school32.Impl;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +22,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.IOException;
 import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -155,6 +156,11 @@ public class AvatarServiceImpl implements AvatarService {
 
             System.out.println("Avatar not found for student with ID: " + studentId);
         }
+    }
+
+    @Override
+    public Page<Avatar> findAll(int page,int size) {
+        return repositoryAvatar.findAll(PageRequest.of(page,size));
     }
 
     private String getExtensions(String fileName) {
