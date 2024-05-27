@@ -23,12 +23,15 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
+
+    Logger logger = Logger.getLogger(String.valueOf(AvatarServiceImpl.class));
 
     @Value("${path.to.avatars.folder}")
     private String avatarDir;
@@ -46,6 +49,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public void uploadAvatarOriginalImage(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Вызвано метод uploadAvatarOriginalImage");
         Student student = repositoryStudent.getById(studentId);
         Optional<Avatar> avatar1 = repositoryAvatar.findAvatarByStudentId(studentId);
         Avatar avatar = avatar1.orElse(null);
@@ -74,6 +78,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public void uploadAvatarOriginalAndMiniImage(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Вызвано метод uploadAvatarOriginalAndMiniImage ");
         Student student = repositoryStudent.getById(studentId);
         Optional<Avatar> avatar1 = repositoryAvatar.findAvatarByStudentId(studentId);
         Avatar avatar = avatar1.orElse(null);
@@ -102,6 +107,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public ResponseEntity<byte[]> downloadAvatar(Long id) {
+        logger.info("Вызвано метод downloadAvatar");
         Optional<Avatar> avatar1 = repositoryAvatar.findAvatarByStudentId(id);
         Avatar avatar = avatar1.orElse(null);
         HttpHeaders headers = new HttpHeaders();
@@ -112,10 +118,12 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long id) {
+        logger.info("Вызвано метод findAvatar");
         return repositoryAvatar.findAvatarByStudentId(id).orElse(new Avatar());
     }
 
     private byte[] generateImagePreview(Path filePath) throws IOException {
+        logger.info("Вызвано метод generateImagePreview");
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 2024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -136,6 +144,7 @@ public class AvatarServiceImpl implements AvatarService {
     @Override
     public void deleteAvatar(Long studentId) {
         // Находим аватар в базе данных по ID студента
+        logger.info("Вызвано метод deleteAvatar");
         Optional<Avatar> avatar1 = repositoryAvatar.findAvatarByStudentId(studentId);
         Avatar avatar = avatar1.orElse(null);
         if (avatar != null) {
@@ -160,10 +169,12 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Page<Avatar> findAll(int page,int size) {
+        logger.info("Вызвано метод findAll");
         return repositoryAvatar.findAll(PageRequest.of(page,size));
     }
 
     private String getExtensions(String fileName) {
+        logger.info("Вызвано метод getExtensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
