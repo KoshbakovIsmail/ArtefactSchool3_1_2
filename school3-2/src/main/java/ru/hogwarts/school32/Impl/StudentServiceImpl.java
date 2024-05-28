@@ -1,5 +1,7 @@
 package ru.hogwarts.school32.Impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school32.exception.StudentNotFoundException;
 import ru.hogwarts.school32.model.Faculty;
@@ -8,12 +10,11 @@ import ru.hogwarts.school32.repositorys.RepositoryStudent;
 import ru.hogwarts.school32.service.StudentService;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class StudentServiceImpl implements StudentService {
     private final RepositoryStudent repositoryStudent;
-    Logger logger = Logger.getLogger(String.valueOf(StudentServiceImpl.class));
+    private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     public StudentServiceImpl(RepositoryStudent repositoryStudent) {
         this.repositoryStudent = repositoryStudent;
     }

@@ -11,3 +11,4 @@ public class School32Application {
 		SpringApplication.run(School32Application.class, args);
 	}
 }
+

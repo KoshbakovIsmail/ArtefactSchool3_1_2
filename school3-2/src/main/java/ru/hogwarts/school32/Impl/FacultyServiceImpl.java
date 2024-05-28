@@ -1,5 +1,7 @@
 package ru.hogwarts.school32.Impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school32.exception.FacultyNotFoundException;
 import ru.hogwarts.school32.model.Faculty;
@@ -8,12 +10,11 @@ import ru.hogwarts.school32.repositorys.RepositoryFaculty;
 import ru.hogwarts.school32.service.FacultyService;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
     private final RepositoryFaculty repositoryFaculty;
-    Logger logger = Logger.getLogger(String.valueOf(FacultyServiceImpl.class));
+    private final Logger logger = LoggerFactory.getLogger(FacultyServiceImpl.class);
     public FacultyServiceImpl(RepositoryFaculty repositoryFaculty) {
         this.repositoryFaculty = repositoryFaculty;
     }

@@ -1,5 +1,7 @@
 package ru.hogwarts.school32.Impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +25,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -31,7 +32,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
 
-    Logger logger = Logger.getLogger(String.valueOf(AvatarServiceImpl.class));
+    private final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     @Value("${path.to.avatars.folder}")
     private String avatarDir;
