@@ -7,6 +7,7 @@ import ru.hogwarts.school32.model.Faculty;
 import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.service.StudentService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -20,6 +21,17 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping("/getStudentNameByA")
+    @Operation(summary = "Получение имени Студента на букву А")
+    public Collection<String> getNameByA() {
+        return studentService.getNameByA();
+    }
+
+    @GetMapping("/getAverageAgeByStream")
+    @Operation(summary = "Получение среднего возраста студентов с использованием Stream ")
+    public Double getAverageAgeByStream() {
+        return studentService.getAverageAgeByStream();
+    }
     @GetMapping("/totalCount")
     @Operation(summary = "Получение общего количесто студентов")
     public int getTotalStudentCount() {

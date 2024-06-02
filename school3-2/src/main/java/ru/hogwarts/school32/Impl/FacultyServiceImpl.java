@@ -9,12 +9,14 @@ import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.repositorys.RepositoryFaculty;
 import ru.hogwarts.school32.service.FacultyService;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
     private final RepositoryFaculty repositoryFaculty;
     private final Logger logger = LoggerFactory.getLogger(FacultyServiceImpl.class);
+
     public FacultyServiceImpl(RepositoryFaculty repositoryFaculty) {
         this.repositoryFaculty = repositoryFaculty;
     }
@@ -74,5 +76,13 @@ public class FacultyServiceImpl implements FacultyService {
     public List<Student> getStudentsFaculty(Long facultyId) {
         logger.info("Вызвано метод getStudentFaculty у класса FacultyServiceImpl");
         return getFacultyById(facultyId).getStudentList();
+    }
+
+    @Override
+    public String getLongestFacultyName() {
+        return repositoryFaculty.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("");
     }
 }

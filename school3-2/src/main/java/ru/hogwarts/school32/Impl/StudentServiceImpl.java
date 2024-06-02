@@ -9,7 +9,9 @@ import ru.hogwarts.school32.model.Student;
 import ru.hogwarts.school32.repositorys.RepositoryStudent;
 import ru.hogwarts.school32.service.StudentService;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -95,6 +97,25 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getLastFiveStudent() {
         logger.info("Вызвано метод getLastFiveStudent у класса StudentServiceImpl");
         return repositoryStudent.findTop5Students();
+    }
+
+    @Override
+    public Collection<String> getNameByA() {
+        logger.info("Вызвано метод getNameByA у класса StudentServiceImpl");
+        return repositoryStudent.findAll().stream()
+                .filter(s -> s.getName().startsWith("A"))
+                .map(n -> n.getName().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Double getAverageAgeByStream() {
+        logger.info("Вызвано метод getAverageAgeByStream у класса StudentServiceImpl");
+        return repositoryStudent.findAll().stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0.0f);
     }
 
 }

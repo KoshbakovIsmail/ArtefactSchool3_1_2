@@ -21,4 +21,6 @@ public interface FacultyService {
     List<Faculty> getByColorOrName(String color, String name);
 
     List<Student> getStudentsFaculty(Long facultyId);
+
+    String getLongestFacultyName();
 }

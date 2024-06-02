@@ -19,6 +19,11 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
+    @GetMapping("/getLongestFacultyName")
+    @Operation(summary = "Получение самого длинного названия Факультета")
+    public String getLongestFacultyName() {
+        return facultyService.getLongestFacultyName();
+    }
     @GetMapping
     @Operation(summary = "Получение всех значение")
     public List<Faculty> getAll() {
