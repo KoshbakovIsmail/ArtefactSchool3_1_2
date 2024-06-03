@@ -1,17 +1,27 @@
 package ru.hogwarts.school32.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.hogwarts.school32.service.InfoService;
 
 @RestController
+@Tag(name = "InfoController")
 public class InfoController {
-    @Value("${server.port}")
-    private String serverPort;
+    private final InfoService infoService;
 
-    @GetMapping("/port")
-    public String gertPort() {
-        return "Server Port:"  + serverPort;
+    public InfoController(InfoService infoService) {
+        this.infoService = infoService;
     }
 
+    @GetMapping("/port")
+    public String getPort() {
+        return infoService.getPort();
+    }
+
+    @GetMapping("/calculate-stream")
+    public void calculate(@RequestParam Integer limit) {
+        infoService.calculate(limit);
+    }
 }
