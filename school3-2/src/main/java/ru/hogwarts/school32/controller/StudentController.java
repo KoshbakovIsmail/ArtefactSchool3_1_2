@@ -21,6 +21,18 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping("/printNameStudent")
+    @Operation(summary = "Печать имени студетов по потоком")
+    public void printStudent() {
+        studentService.printStudentName();
+    }
+
+    @GetMapping("/printNameStudentSync")
+    @Operation(summary = "Печать имени студетов по потоком sync")
+    public void printStudentSync() {
+        studentService.printStudentNameSync();
+    }
+
     @GetMapping("/getStudentNameByA")
     @Operation(summary = "Получение имени Студента на букву А")
     public Collection<String> getNameByA() {
@@ -32,6 +44,7 @@ public class StudentController {
     public Double getAverageAgeByStream() {
         return studentService.getAverageAgeByStream();
     }
+
     @GetMapping("/totalCount")
     @Operation(summary = "Получение общего количесто студентов")
     public int getTotalStudentCount() {
@@ -49,6 +62,7 @@ public class StudentController {
     public List<Student> getLastFiveStudents() {
         return studentService.getLastFiveStudent();
     }
+
     @GetMapping
     @Operation(summary = "Получение всех значение")
     public List<Student> getAll() {
