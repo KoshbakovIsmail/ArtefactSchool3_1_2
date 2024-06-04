@@ -151,7 +151,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Student, id: {}, name: {}", student.getId(), student.getName());
     }
 
-    private synchronized void printStudentNameStartSync(List<Student> student) {
+    private void printStudentNameStartSync(List<Student> student) {
         new Thread(() -> {
             student.forEach(this::printStudentName1Sync);
         }).start();
