@@ -18,7 +18,6 @@ public class StudentServiceImpl implements StudentService {
     private final RepositoryStudent repositoryStudent;
     private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
-
     public StudentServiceImpl(RepositoryStudent repositoryStudent) {
         this.repositoryStudent = repositoryStudent;
     }
@@ -44,10 +43,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student deleteStudent(Long id) {
-            logger.info("Вызвано метод deleteStudent у класса StudentServiceImpl");
-            Student deletedStudent = repositoryStudent.findById(id).orElseThrow(() -> new StudentNotFoundException());
-            repositoryStudent.deleteById(id);
-            return deletedStudent;
+        logger.info("Вызвано метод deleteStudent у класса StudentServiceImpl");
+        Student deletedStudent = repositoryStudent.findById(id).orElseThrow(() -> new StudentNotFoundException());
+        repositoryStudent.deleteById(id);
+        return deletedStudent;
     }
 
     @Override
@@ -118,4 +117,43 @@ public class StudentServiceImpl implements StudentService {
                 .orElse(0.0f);
     }
 
+    @Override
+    public void printStudentName() {
+        List<Student> students = repositoryStudent.findAll();
+        if (students.size() >= 6) {
+            students.subList(0, 2).forEach(this::printStudentName1);
+            printStudentNameStart(students.subList(2, 4));
+            printStudentNameStart(students.subList(4, 6));
+        }
+    }
+
+    private void printStudentName1(Student student) {
+        logger.info("Student, id: {}, name: {}", student.getId(), student.getName());
+    }
+
+    private void printStudentNameStart(List<Student> student) {
+        new Thread(() -> {
+            student.forEach(this::printStudentName1);
+        }).start();
+    }
+
+    @Override
+    public void printStudentNameSync() {
+        List<Student> students = repositoryStudent.findAll();
+        if (students.size() >= 6) {
+            students.subList(0, 2).forEach(this::printStudentName1Sync);
+            printStudentNameStartSync(students.subList(2, 4));
+            printStudentNameStartSync(students.subList(4, 6));
+        }
+    }
+
+    private synchronized void printStudentName1Sync(Student student) {
+        logger.info("Student, id: {}, name: {}", student.getId(), student.getName());
+    }
+
+    private void printStudentNameStartSync(List<Student> student) {
+        new Thread(() -> {
+            student.forEach(this::printStudentName1Sync);
+        }).start();
+    }
 }
